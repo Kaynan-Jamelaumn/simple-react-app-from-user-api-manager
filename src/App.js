@@ -5,8 +5,8 @@ import GlobalStyles from './styles/GlobalStyles';
  function App(){
     return  (
     <React.Fragment>
-        <Login />
         <GlobalStyles />
+        <Login />
     </React.Fragment>
     );
 }
