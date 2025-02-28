@@ -10,7 +10,7 @@ export default createGlobalStyle`
     }
     body {
         font-family: sans-serif;
-        background-color: ${primaryDarkColor};
+        background-color: ${props => props.theme.backgroundDark};
     }
 
     html, body #root{
@@ -21,7 +21,7 @@ export default createGlobalStyle`
         cursor: pointer;
         background: ${primaryColor};
         border: none;
-        color: ${buttonColor}
+        color: ${props => props.theme.buttonPrimaryColor};
         padding: 10px, 20px;
     }
     a {
