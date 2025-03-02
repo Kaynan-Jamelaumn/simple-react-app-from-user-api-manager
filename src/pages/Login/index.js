@@ -4,7 +4,6 @@ import { Title } from './styled';
 import { ThemeContext } from '../../config/ThemeContext';
 import {Container} from '../../styles/GlobalStyles'
 export default function Login(){
-    const { theme, toggleTheme } = useContext(ThemeContext);
     return(
         <React.Fragment>
             <Container>
@@ -14,9 +13,7 @@ export default function Login(){
                         é pequeno
                     </small>
                 </Title>
-                <button onClick={toggleTheme}>
-                Toggle Theme
-                </button>
+                
                     </Container>
         </React.Fragment>
 
