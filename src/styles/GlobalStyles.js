@@ -1,5 +1,4 @@
 import { createGlobalStyle, styled} from 'styled-components';
-import { primaryColor, primaryDarkColor, buttonColor } from '../config/color';
 
 export default createGlobalStyle`
     * {
@@ -10,19 +9,18 @@ export default createGlobalStyle`
     }
     body {
         font-family: sans-serif;
-        background-color: ${props => props.theme.backgroundDark};
+        background-color: ${(props) => props.theme.backgroundDark};
     }
-
     html, body #root{
         height: 100%;
 
     }
     button {
         cursor: pointer;
-        background: ${primaryColor};
+        background: ${(props) => props.theme.backgroundPrimary};
         border: none;
-        color: ${props => props.theme.buttonPrimaryColor};
-        padding: 10px, 20px;
+        color: ${(props) => props.theme.buttonPrimaryColor};
+        padding: 10px 20px;
     }
     a {
         text-decoration: none;

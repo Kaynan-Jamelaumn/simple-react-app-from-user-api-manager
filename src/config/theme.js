@@ -10,7 +10,7 @@ export const lightTheme = {
   export const darkTheme = {
     backgroundPrimary: '#9A0000',
     backgroundDark: '#1A1A1D',
-    buttonColor: '#FFFFFF',
+    buttonPrimaryColor: "#FFFFFF",
     textPrimary: '#FFFFFF',
     textDark: '#000000'
   };
