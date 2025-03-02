@@ -4,7 +4,7 @@ export const lightTheme = {
     backgroundDark: '#f0f0f0',
     buttonPrimaryColor: '#1A1A1D',
     textPrimary: '#000000',
-    textDark: '#FFFFFF'
+    textDark: '#7FFFD4'
   };
   
   export const darkTheme = {
@@ -12,5 +12,5 @@ export const lightTheme = {
     backgroundDark: '#1A1A1D',
     buttonPrimaryColor: "#FFFFFF",
     textPrimary: '#FFFFFF',
-    textDark: '#000000'
+    textDark: '#9A0000'
   };

@@ -6,6 +6,7 @@ export const Title = styled.h1`
 
     small {
         font-size: 12pt;
+        color: ${props => props.theme.textDark}; // Use the theme text color for small text
     }
 `;
 export const Paragrafo = styled.p`
