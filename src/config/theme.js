@@ -8,7 +8,7 @@ export const lightTheme = {
 
 
   textPrimary: '#FFFFFF', 
-  textDark: '#00796B', 
+  textDark: '#131313', 
   textInfo: '#FAFAFAFA',
 
   success: '#388E3C', 

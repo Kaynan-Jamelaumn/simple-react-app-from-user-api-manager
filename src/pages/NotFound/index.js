@@ -1,7 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { NotFoundContainer, Message, RedirectButton } from './styled';
 
 const NotFound = () => {
-  return <div>404 - Page Not Found</div>;
+  const navigate = useNavigate();
+
+  return (
+    <NotFoundContainer>
+      <Message>404 - Page Not Found</Message>
+      <RedirectButton onClick={() => navigate('/')}>
+        Redirect to Home Page
+      </RedirectButton>
+    </NotFoundContainer>
+  );
 };
 
 export default NotFound;
