@@ -49,8 +49,8 @@ export default function Login() {
     <LoginWrapper>
       <Container>
         <FormContainer>
-          <Title isRed={false}>
-            <h1>Login</h1>
+          <Title>
+            Login
             <small>Welcome back! Please log in to continue.</small>
           </Title>
           {from && (

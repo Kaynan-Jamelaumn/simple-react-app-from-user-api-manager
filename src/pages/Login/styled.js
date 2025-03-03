@@ -19,7 +19,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: ${(props) => (props.isRed ? 'red' : props.theme.textPrimary)};
+  color: ${(props) => props.theme.textPrimary};
   text-align: center;
   margin-bottom: 1rem;
   font-size: 15pt;
