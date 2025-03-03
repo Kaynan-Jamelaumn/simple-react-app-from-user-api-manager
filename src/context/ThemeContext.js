@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { lightTheme, darkTheme } from "./theme";
+import { lightTheme, darkTheme } from "../config/theme";
 
 // Create a React Context to hold the theme
 export const ThemeContext = createContext();

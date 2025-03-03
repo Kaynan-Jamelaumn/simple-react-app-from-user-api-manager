@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { FaHome, FaSignInAlt, FaUserAlt, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../config/ThemeContext';
+import { ThemeContext } from '../../context/ThemeContext';
 import { Nav, NavLink, ThemeToggle } from './styled';
 import { darkTheme } from '../../config/theme'; 
 

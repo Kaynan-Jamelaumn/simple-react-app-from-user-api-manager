@@ -4,14 +4,20 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route exact path="/" element={<Home />} />
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/profile" element={<Profile />} />
-      <Route  path="*" element={<NotFound />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/profile" element={
+          <ProtectedRoute pageName="Profile">
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
