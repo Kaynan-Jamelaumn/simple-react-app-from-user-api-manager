@@ -25,7 +25,7 @@ authApi.interceptors.request.use(
 
 // Create a non-authenticated axios instance for public requests
 const publicApi = axios.create({
-  baseURL: 'https://your-api-url.com', // Base URL for public requests
+  baseURL: 'http://localhost:8765', // Base URL for public requests
   headers: {
     'Content-Type': 'application/json', // Set default headers for JSON data
   },
@@ -35,12 +35,21 @@ const publicApi = axios.create({
 export const login = async (credentials) => {
   try {
     // Send a POST request to the login endpoint with user credentials
-    const response = await authApi.post('/user/login', credentials);
+    const response = await publicApi.post('/user/login', credentials);
     // Return the response data (e.g., token and user info)
     return response.data;
   } catch (error) {
-    // Throw an error if the request fails
-    throw error.response.data;
+    // Handle both server errors and network errors
+    if (error.response) {
+      // The server responded with a status code outside the 2xx range
+      throw new Error(error.response.data.message || 'Login failed'); // Throw an Error object
+    } else if (error.request) {
+      // The request was made but no response was received
+      throw new Error('No response received from the server'); // Throw an Error object
+    } else {
+      // Something happened in setting up the request
+      throw new Error(error.message || 'An error occurred during login'); // Throw an Error object
+    }
   }
 };
 
@@ -52,7 +61,16 @@ export const logout = async () => {
     // Return the response data
     return response.data;
   } catch (error) {
-    // Throw an error if the request fails
-    throw error.response.data;
+    // Handle both server errors and network errors
+    if (error.response) {
+      // The server responded with a status code outside the 2xx range
+      throw new Error(error.response.data.message || 'Logout failed'); // Throw an Error object
+    } else if (error.request) {
+      // The request was made but no response was received
+      throw new Error('No response received from the server'); // Throw an Error object
+    } else {
+      // Something happened in setting up the request
+      throw new Error(error.message || 'An error occurred during logout'); // Throw an Error object
+    }
   }
 };
