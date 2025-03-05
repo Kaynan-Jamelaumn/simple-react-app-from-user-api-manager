@@ -89,5 +89,40 @@ export const ModalItem = styled.div`
   &:hover {
     background-color: ${(props) => props.theme.modalHoverBackgroundColor};
   }
-  
+`;
+
+// New styled components for inline styles
+export const WelcomeMessage = styled.div`
+  margin-left: auto;
+  padding: 0 10px;
+`;
+
+export const ProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const ProfilePictureWrapper = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
+export const ProfileImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+`;
+
+export const ModalProfileImage = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+`;
+
+export const ModalProfileWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 `;

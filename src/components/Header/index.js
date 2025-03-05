@@ -1,16 +1,30 @@
-import React, {  useContext, useState, useRef, useEffect } from 'react';
-import { FaHome, FaSignInAlt, FaUserAlt, FaMoon, FaSun, FaSignOutAlt } from 'react-icons/fa';
+import React, { useContext, useState, useRef, useEffect } from 'react';
+import { FaHome, FaSignInAlt, FaUserAlt, FaMoon, FaSun, FaSignOutAlt, FaUserPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../context/ThemeContext';
-import { Nav, NavLink, ThemeToggle, NavItems, Modal, ModalContent, ModalItem, ModalPicture  } from './styled';
+import {
+  Nav,
+  NavLink,
+  ThemeToggle,
+  NavItems,
+  Modal,
+  ModalContent,
+  ModalItem,
+  ModalPicture,
+  WelcomeMessage,
+  ProfileContainer,
+  ProfilePictureWrapper,
+  ProfileImage,
+  ModalProfileImage,
+  ModalProfileWrapper,
+} from './styled';
 import { darkTheme } from '../../config/theme';
 import { useAuth } from '../../context/AuthContext';
 import { useCustomToast } from '../../utils/customToasts';
 
-
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { isAuthenticated, user,  logout } = useAuth(); // Use useAuth to get authentication state and logout function
+  const { isAuthenticated, user, logout } = useAuth(); // Use useAuth to get authentication state and logout function
   const isDarkTheme = theme === darkTheme;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null); // Ref for the modal
@@ -25,7 +39,6 @@ export default function Header() {
       showToast('error', error.message || 'Logout failed. Please try again.'); // Display error toast
     }
   };
-
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -45,7 +58,6 @@ export default function Header() {
     };
   }, []);
 
-  
   return (
     <Nav style={{ backgroundColor: theme.navBackGround, color: theme.iconColor }}>
       <NavItems>
@@ -53,58 +65,52 @@ export default function Header() {
           <FaHome size={24} />
         </NavLink>
         {!isAuthenticated ? (
-          <NavLink as={Link} to="/login">
-            <FaSignInAlt size={24} />
-          </NavLink>
-        ): /*(
+          <React.Fragment>
+            <NavLink as={Link} to="/login">
+              <FaSignInAlt size={24} />
+            </NavLink>
+            <NavLink as={Link} to="/register">
+              <FaUserPlus size={24} />
+            </NavLink>
+          
+          </React.Fragment>
+        ) : null  /*(
           <NavLink as={Link} to="/" onClick={handleLogout}>
             <FaSignOutAlt size={24} />
           </NavLink>
-        )*/ null }
+        )*/}
         {isAuthenticated && user && (
-          <div style={{ marginLeft: 'auto', padding: '0 10px' }}>
+          <WelcomeMessage>
             Welcome, {user.name}
-          </div>
+          </WelcomeMessage>
         )}
       </NavItems>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <ProfileContainer>
         <ThemeToggle onClick={toggleTheme}>
           {isDarkTheme ? <FaSun size={24} /> : <FaMoon size={24} />}
         </ThemeToggle>
         {isAuthenticated && (
-          <div
-            onClick={toggleModal}
-            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-          >
+          <ProfilePictureWrapper onClick={toggleModal}>
             {user?.profilePicture ? (
-              <img
-                src={user.profilePicture}
-                alt="Profile"
-                style={{ width: '32px', height: '32px', borderRadius: '50%' }}
-              />
+              <ProfileImage src={user.profilePicture} alt="Profile" />
             ) : (
               <FaUserAlt size={24} />
             )}
-          </div>
+          </ProfilePictureWrapper>
         )}
-      </div>
+      </ProfileContainer>
       {isModalOpen && (
         <Modal ref={modalRef}>
           <ModalContent>
             {/* Profile Picture in Modal */}
             <ModalPicture>
-
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+              <ModalProfileWrapper>
                 {user?.profilePicture ? (
-                  <img
-                  src={user.profilePicture}
-                  alt="Profile"
-                  style={{ width: '48px', height: '48px', borderRadius: '50%' }}
-                  />
+                  <ModalProfileImage src={user.profilePicture} alt="Profile" />
                 ) : (
                   <FaUserAlt size={48} />
                 )}
-              </div>
+              </ModalProfileWrapper>
             </ModalPicture>
 
             <ModalItem as={Link} to="/profile" onClick={() => {}}>Information</ModalItem>

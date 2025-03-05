@@ -39,7 +39,7 @@ export default function Login() {
   // Handle input changes in the form fields
   const handleInputChange = (e) => {
     const { name, value } = e.target; // Extract name and value from the input
-    setFormData({ ...formData, [name]: value }); // Update formData state
+    setFormData({ ...formData, [name]: value }); // Update formData state with new values
   };
 
   // Handle form submission
