@@ -5,12 +5,27 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { Nav, NavLink, ThemeToggle, NavItems } from './styled';
 import { darkTheme } from '../../config/theme';
 import { useAuth } from '../../context/AuthContext';
+import { useCustomToast } from '../../utils/customToasts';
+
 
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { isAuthenticated, logout } = useAuth(); // Use useAuth to get authentication state and logout function
+  const { isAuthenticated, user,  logout } = useAuth(); // Use useAuth to get authentication state and logout function
   const isDarkTheme = theme === darkTheme;
 
+  const showToast = useCustomToast();
+
+  const handleLogout = async () => {
+    try {
+      await logout(); // Call the logout function
+      showToast('success', 'Logged out successfully!'); // Display success toast
+    } catch (error) {
+      showToast('error', error.message || 'Logout failed. Please try again.'); // Display error toast
+    }
+  };
+
+
+  
   return (
     <Nav style={{ backgroundColor: theme.navBackGround, color: theme.iconColor }}>
       <NavItems>
@@ -23,13 +38,18 @@ export default function Header() {
             <FaSignInAlt size={24} />
           </NavLink>
         ) : (
-          <NavLink as={Link} to="/" onClick={logout}>
+          <NavLink as={Link} to="/" onClick={handleLogout}>
             <FaSignOutAlt size={24} />
           </NavLink>
         )}
         <NavLink as={Link} to="/profile">
           <FaUserAlt size={24} />
         </NavLink>
+        {isAuthenticated && user && (
+          <div style={{ marginLeft: 'auto', padding: '0 10px' }}>
+            Welcome, {user.name}
+          </div>
+        )}
       </NavItems>
       <ThemeToggle onClick={toggleTheme}>
         {isDarkTheme ? <FaSun size={24} /> : <FaMoon size={24} />}

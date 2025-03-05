@@ -16,10 +16,15 @@ import { Container } from '../../styles/GlobalStyles';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import { useAuth } from '../../context/AuthContext'; // Custom hook for authentication
 
+
+import { useCustomToast } from '../../utils/customToasts';
+
 export default function Login() {
   const location = useLocation(); // Access the current location objectit  contains information about the current URL and any state passed to it.
   const navigate = useNavigate(); // Hook for programmatic navigation allows to programmatically navigate to different routes in your application.
   const { from, pageName } = location.state || {}; // Retrieve state from location (e.g., redirect path)
+  const showToast = useCustomToast();
+
 
   // State for form data, error messages, and password visibility
   const [formData, setFormData] = React.useState({
@@ -50,9 +55,11 @@ export default function Login() {
 
     try {
       await login(formData); // Call the login function with form data
+      showToast('success', 'Logged in successfully!');
       navigate(from || '/'); // Redirect to the dashboard or the previous page
     } catch (error) {
       // Display an error message if login fails
+      showToast('error', error.message || 'Login failed. Please try again.');
       setError(error.message || 'Login failed. Please try again.');
     }
   };

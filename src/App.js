@@ -4,7 +4,8 @@
   import Header from './components/Header';
   import AppRoutes from './routes'; 
   import { ThemeContext } from './context/ThemeContext';
-
+  import { ToastContainer } from 'react-toastify'; 
+  
   function App() {
     const { theme } = useContext(ThemeContext); // Get the current theme from the custom ThemeContext
 
@@ -14,6 +15,15 @@
           <GlobalStyles />
           <Header />
           <AppRoutes />
+          <ToastContainer   position="top-right"
+          autoClose={5000} // Close after 5 seconds
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover/>
         </React.Fragment>
       </StyledThemeProvider>
     );
