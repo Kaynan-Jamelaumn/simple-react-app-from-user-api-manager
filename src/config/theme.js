@@ -1,11 +1,13 @@
 export const lightTheme = {
-  navBackGroundColor: '#B1053E', // #C3073F #EF5A6F
+  navBackGroundColor: '#B1053E', // #C3073F #EF5A6F rgb(199, 21, 74)
   bodyBackgroundColor: '#DCDCDC', 
 
   buttonBackgroundColor: '#1A1A1D', 
   buttonTextColor: '#FFFFFF', 
   buttonHoverBackgroundColor: '#4E4E50', 
 
+  modalBackgroundColor: '#C3073F', 
+  modalHoverBackgroundColor: 'rgb(207, 34, 86)', //'rgb(198, 27, 78)', 
 
   textPrimary: '#FFFFFF', 
   textDark: '#131313', 
@@ -18,7 +20,7 @@ export const lightTheme = {
   tagPrimary: '#FF5722', 
   tagSecondary: '#9C27B0',
   tagTertiary: '#009688', 
-  iconColor: '#FFA004', 
+  iconColor: '#FFB230',
   iconThemeColor: '#1A1A1D', 
 
   inputBackground: '#FAFAFAFA', 
@@ -36,6 +38,9 @@ export const darkTheme = {
   buttonBackgroundColor: '#211C84', 
   buttonHoverBackgroundColor: '#4D55CC', 
   buttonTextColor: '#FFFFFF', 
+
+  modalBackgroundColor: '#242424', 
+  modalHoverBackgroundColor: '#646464', 
 
   textPrimary: '#FFFFFF', 
   textDark: '#00796B', 
