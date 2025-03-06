@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
   const [user, setUser] = useState(null); // Store user data
+  const [isLoading, setIsLoading] = useState(true); // Track initialization state
 
   // Check for a token and user data in localStorage on component mount
   useEffect(() => {
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true); // Set authenticated to true if a token exists
       setUser(JSON.parse(userData)); // Set user data from localStorage
     }
+    setIsLoading(false); // Mark initialization as complete
   }, []);
 
   // Function to handle user login
@@ -49,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
   // Provide authentication state and functions to child components
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

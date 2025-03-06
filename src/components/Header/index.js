@@ -125,7 +125,7 @@ export default function Header() {
             <ModalItem as={Link} to="/profile" onClick={() => {}}>
               <FaInfoCircle size={18} style={{ marginRight: '8px' }} /> Information
             </ModalItem>
-            <ModalItem onClick={() => {}}>
+            <ModalItem  onClick={() => {}}>
               <FaEdit size={18} style={{ marginRight: '8px' }} /> Update
             </ModalItem>
             <ModalItem as={Link} to="/logout" onClick={handleLogout}>
