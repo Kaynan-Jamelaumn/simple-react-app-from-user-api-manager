@@ -71,12 +71,16 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  align-items: center;
+  align-items: flex-start; 
   background-color: ${(props) => props.theme.modalBackgroundColor};
   border-radius: 7px;
 `;
 
 export const ModalPicture = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  width: 100%; 
   margin-top: 10px;
 `;
 
@@ -84,7 +88,8 @@ export const ModalItem = styled.div`
   padding: 10px;
   cursor: pointer;
   width: 100%;
-  text-align: center;
+  display: flex; 
+  align-items: center; 
   color: ${(props) => props.theme.textPrimary};
   &:hover {
     background-color: ${(props) => props.theme.modalHoverBackgroundColor};
@@ -121,8 +126,12 @@ export const ModalProfileImage = styled.img`
   border-radius: 50%;
 `;
 
+
+
 export const ModalProfileWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: center; 
+  align-items: center; 
+  width: 100%; 
   margin-bottom: 16px;
 `;

@@ -1,5 +1,14 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { FaHome, FaSignInAlt, FaUserAlt, FaMoon, FaSun, FaSignOutAlt, FaUserPlus } from 'react-icons/fa';
+import {   FaHome,
+  FaSignInAlt,
+  FaUserAlt,
+  FaMoon,
+  FaSun,
+  FaSignOutAlt,
+  FaUserPlus,
+  FaInfoCircle,
+  FaEdit,
+  FaCog, } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../context/ThemeContext';
 import {
@@ -113,11 +122,17 @@ export default function Header() {
               </ModalProfileWrapper>
             </ModalPicture>
 
-            <ModalItem as={Link} to="/profile" onClick={() => {}}>Information</ModalItem>
-            <ModalItem onClick={() => {}}>Update</ModalItem>
-            <ModalItem as={Link} to="/logout" onClick={handleLogout}>Logout</ModalItem>
+            <ModalItem as={Link} to="/profile" onClick={() => {}}>
+              <FaInfoCircle size={18} style={{ marginRight: '8px' }} /> Information
+            </ModalItem>
+            <ModalItem onClick={() => {}}>
+              <FaEdit size={18} style={{ marginRight: '8px' }} /> Update
+            </ModalItem>
+            <ModalItem as={Link} to="/logout" onClick={handleLogout}>
+              <FaSignOutAlt size={18} style={{ marginRight: '8px' }} /> Logout
+            </ModalItem>
           </ModalContent>
-        </Modal>
+      </Modal>
       )}
     </Nav>
   );
