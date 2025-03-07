@@ -14,14 +14,21 @@ import {
   EyeButton,
 } from '../../styles/GlobalStyles'; // Import global styled components
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
-import { useAuth } from '../../context/AuthContext'; // Custom hook for authentication
 import { useCustomToast } from '../../utils/customToasts';
+
+// Auth
+import { useAuth } from '../../context/AuthContext'; // Custom hook for authentication
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../store/authSlice'; // redux
 
 export default function Login() {
   const location = useLocation(); // Access the current location object
   const navigate = useNavigate(); // Hook for programmatic navigation
   const { from, pageName } = location.state || {}; // Retrieve state from location (e.g., redirect path)
   const showToast = useCustomToast();
+
+  const dispatch = useDispatch();
+  const { isLoading, error: authError } = useSelector((state) => state.auth);
 
   // State for form data, error messages, and password visibility
   const [formData, setFormData] = React.useState({
@@ -31,7 +38,7 @@ export default function Login() {
   const [error, setError] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const { login } = useAuth(); // Access the login function from AuthContext
+  //onst { login } = useAuth(); // Access the login function from AuthContext
 
   // Handle input changes in the form fields
   const handleInputChange = (e) => {
@@ -51,7 +58,8 @@ export default function Login() {
     setError(''); // Clear any previous errors
 
     try {
-      await login(formData); // Call the login function with form data
+      //await login(formData); // Call the login function with form data
+      await dispatch(loginUser(formData)).unwrap(); // redux 
       showToast('success', 'Logged in successfully!');
       navigate(from || '/'); // Redirect to the dashboard or the previous page
     } catch (error) {

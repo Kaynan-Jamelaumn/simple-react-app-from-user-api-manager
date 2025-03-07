@@ -28,13 +28,21 @@ import {
   ModalProfileWrapper,
 } from './styled';
 import { darkTheme } from '../../config/theme';
-import { useAuth } from '../../context/AuthContext';
 import { useCustomToast } from '../../utils/customToasts';
 import defaultAvatar from  '../../utils/default-avatar.png';
 
+
+// Auth 
+import { useAuth } from '../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../store/authSlice'; // redux
+
 export default function Header() {
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.auth); // get authentication state and user data
+  //const { isAuthenticated, user, logout } = useAuth(); // Use useAuth to get authentication state and logout function
+
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { isAuthenticated, user, logout } = useAuth(); // Use useAuth to get authentication state and logout function
   const isDarkTheme = theme === darkTheme;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null); // Ref for the modal
@@ -43,7 +51,8 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      await logout(); // Call the logout function
+      await dispatch(logoutUser()).unwrap();// Call the logout function redux 
+      //await logout(); // Call the logout function
       showToast('success', 'Logged out successfully!'); // Display success toast
     } catch (error) {
       showToast('error', error.message || 'Logout failed. Please try again.'); // Display error toast

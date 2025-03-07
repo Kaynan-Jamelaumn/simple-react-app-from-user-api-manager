@@ -4,9 +4,10 @@ import App from './App';
 import { ThemeProvider } from './context/ThemeContext';
 //import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
-
 import { AuthProvider } from "./context/AuthContext"; 
 
+import store from './store/store'
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -15,12 +16,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 <React.StrictMode>
   <ThemeProvider>
-    <AuthProvider>
+    <Provider store={store}>
+    {/*<AuthProvider> */}
 
       <Router>
         <App />
       </Router>
-    </AuthProvider>
+    {/*</AuthProvider> */}
+    </Provider>
   </ThemeProvider>
 </React.StrictMode>
 );

@@ -19,14 +19,21 @@ import {
 } from '../../styles/GlobalStyles'; // Import global styled components
 import { useCustomToast } from '../../utils/customToasts';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+
+
+// Auth
 import { register } from '../../services/api';
 import { useAuth } from '../../context/AuthContext'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../store/authSlice';
 
 export default function Register() {
   const navigate = useNavigate();
   const showToast = useCustomToast();
 
-  const { login } = useAuth(); // Use the login function from AuthContext
+  //const { login } = useAuth(); // Use the login function from AuthContext
+  const dispatch = useDispatch();
+  const { isLoading, error: authError } = useSelector((state) => state.auth);
 
   // State for form data, error messages, and password visibility
   const [formData, setFormData] = React.useState({
@@ -71,10 +78,11 @@ export default function Register() {
       const loginData = await register(formData);
 
       // Use the login function from AuthContext to store the token and user data
-      await login({
+    /*  await login({
         email: formData.email,
         password: formData.password,
-      });
+      });*/
+      await dispatch(registerUser(formData)).unwrap(); // Redux
 
       // If successful, show a success message and redirect
       showToast('success', 'Registration and login successful!');

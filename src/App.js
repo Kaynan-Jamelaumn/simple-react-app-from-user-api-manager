@@ -5,9 +5,18 @@
   import AppRoutes from './routes'; 
   import { ThemeContext } from './context/ThemeContext';
   import { ToastContainer } from 'react-toastify'; 
-  
+  import { useDispatch } from 'react-redux';
+import { initializeAuth } from './store/authSlice';
+
+
   function App() {
     const { theme } = useContext(ThemeContext); // Get the current theme from the custom ThemeContext
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+      dispatch(initializeAuth());
+    }, [dispatch]);
+
 
     return (
       <StyledThemeProvider theme={theme}> {/* Pass theme to  all styled-components */}

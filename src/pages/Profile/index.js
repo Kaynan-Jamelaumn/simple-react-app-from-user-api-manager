@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext'; // Import the authentication context to access user data
 import {
   FormWrapper,
   FormContainer,
@@ -17,14 +16,23 @@ import {
 } from '../../styles/GlobalStyles'; // Import styled components for the form
 
 import defaultAvatar from  '../../utils/default-avatar.png';
-import { update } from '../../services/api';
 import { useCustomToast } from '../../utils/customToasts';
 
+// Auth
+import { useAuth } from '../../context/AuthContext'; // Import the authentication context to access user data
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../store/authSlice';
+import { update } from '../../services/api';
+
 export default function Profile() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  
+
   const showToast = useCustomToast();
   const [error, setError] = React.useState('');
 
-  const { user, updateUser } = useAuth(); // Get the current user data and updateUser function from the authentication context
+  //const { user, updateUser } = useAuth(); // Get the current user data and updateUser function from the authentication context
   const [isEditing, setIsEditing] = useState(false); // State to track if the profile is in edit mode
   const [formData, setFormData] = useState({
     ...user,
@@ -95,9 +103,10 @@ export default function Profile() {
   
       // Call the update function with the form data
       const updatedUser = await update(formData);
-  
+
       // Update the user context with the new data
-      updateUser(updatedUser);
+      dispatch(updateUser(updatedUser)); // redux
+      //updateUser(updatedUser); Auth context
   
       // Update the original data with the new form data
       setOriginalData(formData);
