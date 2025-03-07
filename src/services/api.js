@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { data } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; // Import your AuthContext
+import { useNavigation } from './useNavigation'; // Import the custom navigation hook
 
 // Create an authenticated axios instance for requests that require a token
 const authApi = axios.create({
@@ -24,6 +25,31 @@ authApi.interceptors.request.use(
   }
 );
 
+// Add a response interceptor to handle token expiration
+authApi.interceptors.response.use(
+  (response) => {
+    // If the response is successful, just return it
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Check if the error is due to an expired token (401 Unauthorized)
+    if (error.response?.status === 401) {
+      // Log the user out
+      const { logout } = useAuth();
+      logout();
+
+      // Use the navigate function to redirect to the login page
+      const navigate = useNavigation();
+      navigate('/login', { state: { from: window.location.pathname } }); // Redirect to login with the current path
+    }
+
+    // If the error is not related to token expiration, just reject it
+    return Promise.reject(error);
+  }
+);
+
 // Create a non-authenticated axios instance for public requests
 const publicApi = axios.create({
   baseURL: 'http://localhost:8765', // Base URL for public requests
@@ -37,6 +63,8 @@ export const login = async (credentials) => {
   try {
     // Send a POST request to the login endpoint with user credentials
     const response = await publicApi.post('/user/login', credentials);
+    // Store the token in localStorage
+    localStorage.setItem('token', response.data.token);
     // Return the response data (e.g., token and user info)
     return response.data;
   } catch (error) {
@@ -59,10 +87,9 @@ export const logout = async () => {
   try {
     // Send a GET request to the logout endpoint
     const response = await authApi.get('/user/logout');
-
-
+    // Remove the token from localStorage
+    localStorage.removeItem('token');
     // Return the response data
-
     return response.data;
   } catch (error) {
     // Handle both server errors and network errors
