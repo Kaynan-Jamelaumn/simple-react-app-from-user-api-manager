@@ -1,30 +1,27 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
+  FormWrapper,
+  Container,
   Title,
-  LoginForm,
+  FormContainer,
+  Form,
   Input,
   Button,
-  FormContainer,
   ErrorMessage,
-  LoginWrapper,
-  LoginMessage,
+  FormMessage,
   PasswordInputContainer,
   EyeButton,
-} from './styled';
-import { Container } from '../../styles/GlobalStyles'; 
+} from '../../styles/GlobalStyles'; // Import global styled components
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import { useAuth } from '../../context/AuthContext'; // Custom hook for authentication
-
-
 import { useCustomToast } from '../../utils/customToasts';
 
 export default function Login() {
-  const location = useLocation(); // Access the current location objectit  contains information about the current URL and any state passed to it.
-  const navigate = useNavigate(); // Hook for programmatic navigation allows to programmatically navigate to different routes in your application.
+  const location = useLocation(); // Access the current location object
+  const navigate = useNavigate(); // Hook for programmatic navigation
   const { from, pageName } = location.state || {}; // Retrieve state from location (e.g., redirect path)
   const showToast = useCustomToast();
-
 
   // State for form data, error messages, and password visibility
   const [formData, setFormData] = React.useState({
@@ -70,49 +67,47 @@ export default function Login() {
   };
 
   return (
-    <LoginWrapper>
-      <Container>
-        <FormContainer>
-          <Title>
-            Login
-            <small>Welcome back! Please log in to continue.</small>
-          </Title>
-          {/* Display a message if the user was redirected to login */}
-          {from && (
-            <LoginMessage>
-              You must be logged in to {pageName ? `access ${pageName}` : `access ${from}`}.
-            </LoginMessage>
-          )}
-          {/* Login form */}
-          <LoginForm onSubmit={handleSubmit}>
-            {/* Email input field */}
+    <FormWrapper>
+      <FormContainer>
+        <Title>
+          Login
+          <small>Welcome back! Please log in to continue.</small>
+        </Title>
+        {/* Display a message if the user was redirected to login */}
+        {from && (
+          <FormMessage>
+            You must be logged in to {pageName ? `access ${pageName}` : `access ${from}`}.
+          </FormMessage>
+        )}
+        {/* Login form */}
+        <Form onSubmit={handleSubmit}>
+          {/* Email input field */}
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          {/* Password input field with visibility toggle */}
+          <PasswordInputContainer>
             <Input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
               onChange={handleInputChange}
             />
-            {/* Password input field with visibility toggle */}
-            <PasswordInputContainer>
-              <Input
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-              <EyeButton type="button" onClick={togglePasswordVisibility}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </EyeButton>
-            </PasswordInputContainer>
-            {/* Display error message if any */}
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-            {/* Submit button */}
-            <Button type="submit">Log In</Button>
-          </LoginForm>
-        </FormContainer>
-      </Container>
-    </LoginWrapper>
+            <EyeButton type="button" onClick={togglePasswordVisibility}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </EyeButton>
+          </PasswordInputContainer>
+          {/* Display error message if any */}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {/* Submit button */}
+          <Button type="submit">Log In</Button>
+        </Form>
+      </FormContainer>
+    </FormWrapper>
   );
 }

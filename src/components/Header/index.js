@@ -128,7 +128,7 @@ export default function Header() {
             <ModalItem  onClick={() => {}}>
               <FaEdit size={18} style={{ marginRight: '8px' }} /> Update
             </ModalItem>
-            <ModalItem as={Link} to="/logout" onClick={handleLogout}>
+            <ModalItem as={Link} to="/" onClick={handleLogout}>
               <FaSignOutAlt size={18} style={{ marginRight: '8px' }} /> Logout
             </ModalItem>
           </ModalContent>
