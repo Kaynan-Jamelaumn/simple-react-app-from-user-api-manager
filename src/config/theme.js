@@ -27,7 +27,8 @@ export const lightTheme = {
   inputFocus: '#FAFAFAFA', 
   inputTextTyped: '#161616', 
   borderColor: '#DDDDDD', 
-
+  inputDisabledBackground: '#A4A4A4 ', 
+  inputDisabledTextColor: '#FBFBFB',
   loginMessageColor: '#EEEEEE',
 };
 
@@ -60,7 +61,8 @@ export const darkTheme = {
   borderColor: '#444444',
   inputText: '#FAFAFAFA', 
   inputTextTyped: '#DDDDDD', 
-
+  inputDisabledBackground: '#FDFDFD', 
+  inputDisabledTextColor: '#a0a0a0',
 
   loginMessageColor: '#EEEEEE',
 };

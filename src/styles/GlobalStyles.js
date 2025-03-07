@@ -128,6 +128,13 @@ export const Form = styled.form`
   gap: 1rem;
 `;
 
+export const FormLabel = styled.label`
+  color: ${(props) => props.theme.textPrimary}; // Use the theme color
+  font-size: 14pt; // Make it a little bigger
+  margin-bottom: 8px; // Add a small bottom margin
+  display: block; // Ensure it takes up the full width
+`;
+
 export const Input = styled.input`
   padding: 0.75rem;
   border: 1px solid ${(props) => props.theme.borderColor};
@@ -137,7 +144,7 @@ export const Input = styled.input`
   background: ${(props) => props.theme.inputBackground};
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
-  padding-right: 2.5rem; // Add padding to the right to make space for the eye icon
+  padding-right: 2.5rem;
 
   &:focus {
     border-color: ${(props) => props.theme.inputFocus};
@@ -148,8 +155,17 @@ export const Input = styled.input`
   &::placeholder {
     color: ${(props) => props.theme.inputTextTyped};
   }
-`;
 
+  &:disabled {
+    background: ${(props) => props.theme.inputDisabledBackground} !important;
+    color: ${(props) => props.theme.inputDisabledTextColor};
+    cursor: not-allowed;
+  }
+
+  &:disabled:hover {
+    cursor: not-allowed;
+  }
+`;
 export const PasswordInputContainer = styled.div`
   position: relative;
   width: 100%;
