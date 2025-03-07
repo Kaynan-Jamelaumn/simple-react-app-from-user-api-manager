@@ -282,3 +282,28 @@ export const FileInputText = styled.span`
   text-overflow: ellipsis;
   margin-right: 0.5rem;
 `;
+
+
+// Estilos para o componente de imagem
+export const ImageContainer = styled.div`
+  display: flex;
+  justify-content: ${({ center }) => (center ? 'center' : 'flex-start')};
+  align-items: ${({ center }) => (center ? 'center' : 'flex-start')};
+  width: ${({ width }) => width || 'auto'};
+  height: ${({ height }) => height || 'auto'};
+  margin: ${({ margin }) => margin || '0'};
+`;
+
+export const Image = styled.img`
+  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => height || 'auto'};
+  border-radius: ${({ borderRadius }) => borderRadius || '0'};
+  object-fit: ${({ objectFit }) => objectFit || 'cover'};
+  box-shadow: ${({ shadow }) => shadow || 'none'};
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &:hover {
+    transform: ${({ hoverEffect }) => (hoverEffect ? 'scale(1.05)' : 'none')};
+    opacity: ${({ hoverEffect }) => (hoverEffect ? '0.9' : '1')};
+  }
+`;

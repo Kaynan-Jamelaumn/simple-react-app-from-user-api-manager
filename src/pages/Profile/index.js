@@ -12,7 +12,12 @@ import {
   FileInputLabel,
   FileInputButton,
   FormLabel,
+  Image,
+  ImageContainer,
 } from '../../styles/GlobalStyles'; // Import styled components for the form
+
+import defaultAvatar from  '../../utils/default-avatar.png';
+
 
 export default function Profile() {
   const { user } = useAuth(); // Get the current user data from the authentication context
@@ -25,7 +30,7 @@ export default function Profile() {
     ...user,
     birthDate: user.birthDate ? new Date(user.birthDate).toISOString().split('T')[0] : '', // Store the original user data to revert changes if needed
   });
-  const [profilePicture, setProfilePicture] = useState(user.profilePicture || 'default-avatar.png'); // State for the profile picture, defaulting to a placeholder if none exists
+  const [profilePicture, setProfilePicture] = useState(user.profilePicture || defaultAvatar); // State for the profile picture, defaulting to a placeholder if none exists
 
   // Handle changes in input fields
   const handleInputChange = (e) => {
@@ -54,7 +59,7 @@ export default function Profile() {
   // Cancel editing and revert to original data
   const handleCancel = () => {
     setFormData(originalData); // Reset form data to the original user data
-    setProfilePicture(user.profilePicture || 'default-avatar.png'); // Reset profile picture
+    setProfilePicture(user.profilePicture || defaultAvatar); // Reset profile picture
     setIsEditing(false); // Exit edit mode
   };
 
@@ -67,7 +72,7 @@ export default function Profile() {
   };
 
   // Fields to exclude from the form (e.g., internal user data that shouldn't be edited)
-  const excludedFields = ['lastLogin', 'isActive', 'role', 'updatedAt', 'createdAt', 'id', 'profilePicture'];
+  const excludedFields = ['lastLogin', 'isActive', 'role', 'updatedAt', 'createdAt', 'id', 'profilePicture', '_id', '__v'];
 
   return (
     <FormWrapper>
@@ -75,30 +80,37 @@ export default function Profile() {
         <Title>Profile</Title>
         <Form>
           {/* Profile picture section */}
-          <FormLabel>
-            <img src={profilePicture} alt="Profile" width={100} height={100} style={{ borderRadius: '50%', marginBottom: '10px' }} />
-            {isEditing && ( // Show file input only in edit mode
-              <FileInputContainer>
-                <FileInputText>
-                  {formData.profilePicture && typeof formData.profilePicture === 'object'
-                    ? formData.profilePicture.name // Display the uploaded file name
-                    : 'No file chosen'}
-                </FileInputText>
-                <FileInputLabel htmlFor="profilePicture">
-                  <FileInputButton>Choose Profile Picture</FileInputButton>
-                </FileInputLabel>
-                <Input
-                  type="file"
-                  id="profilePicture"
-                  name="profilePicture"
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  hidden
-                />
-              </FileInputContainer>
-            )}
-          </FormLabel>
-
+          <ImageContainer center style={{ marginBottom: '10px' }}>
+            <Image
+              src={profilePicture}
+              alt="Profile"
+              width="100px"
+              height="100px"
+              borderRadius="50%"
+            />
+          </ImageContainer>
+  
+          {isEditing && ( // Show file input only in edit mode
+            <FileInputContainer>
+              <FileInputText>
+                {formData.profilePicture && typeof formData.profilePicture === 'object'
+                  ? formData.profilePicture.name // Display the uploaded file name
+                  : 'No file chosen'}
+              </FileInputText>
+              <FileInputLabel htmlFor="profilePicture">
+                <FileInputButton>Choose Profile Picture</FileInputButton>
+              </FileInputLabel>
+              <Input
+                type="file"
+                id="profilePicture"
+                name="profilePicture"
+                onChange={handleFileChange}
+                accept="image/*"
+                hidden
+              />
+            </FileInputContainer>
+          )}
+  
           {/* Dynamically render form fields for user data */}
           {Object.entries(user).map(([key, value]) => (
             !excludedFields.includes(key) && ( // Exclude fields that shouldn't be edited
@@ -114,18 +126,19 @@ export default function Profile() {
               </div>
             )
           ))}
-
+  
           {/* Render Edit/Save/Cancel buttons based on edit mode */}
           {!isEditing ? (
-            <Button type="button" onClick={handleEdit}>Editar</Button> // Show Edit button when not in edit mode
+            <Button type="button" onClick={handleEdit}>Edit</Button> // Show Edit button when not in edit mode
           ) : (
             <>
-              <Button type="button" onClick={handleSave}>Salvar</Button> {/* Show Save and Cancel buttons in edit mode */}
-              <Button type="button" onClick={handleCancel}>Cancelar</Button>
+              <Button type="button" onClick={handleSave}>Save</Button> {/* Show Save and Cancel buttons in edit mode */}
+              <Button type="button" onClick={handleCancel}>Cancel</Button>
             </>
           )}
         </Form>
       </FormContainer>
     </FormWrapper>
   );
+
 }

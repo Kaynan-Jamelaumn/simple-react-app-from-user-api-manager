@@ -30,6 +30,7 @@ import {
 import { darkTheme } from '../../config/theme';
 import { useAuth } from '../../context/AuthContext';
 import { useCustomToast } from '../../utils/customToasts';
+import defaultAvatar from  '../../utils/default-avatar.png';
 
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);

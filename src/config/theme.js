@@ -23,12 +23,12 @@ export const lightTheme = {
   iconColor: '#FFB230',
   iconThemeColor: '#1A1A1D', 
 
-  inputBackground: '#FAFAFAFA', 
-  inputFocus: '#FAFAFAFA', 
+  inputBackground: '#FAFAFA', 
+  inputFocus: '#FAFAFA', 
   inputTextTyped: '#161616', 
   borderColor: '#DDDDDD', 
-  inputDisabledBackground: '#A4A4A4 ', 
-  inputDisabledTextColor: '#FBFBFB',
+  inputDisabledBackground: '#D8D8D8', 
+  inputDisabledTextColor: '#161616',
   loginMessageColor: '#EEEEEE',
 };
 
@@ -61,7 +61,7 @@ export const darkTheme = {
   borderColor: '#444444',
   inputText: '#FAFAFAFA', 
   inputTextTyped: '#DDDDDD', 
-  inputDisabledBackground: '#FDFDFD', 
+  inputDisabledBackground: '#4C4C4C', 
   inputDisabledTextColor: '#a0a0a0',
 
   loginMessageColor: '#EEEEEE',
