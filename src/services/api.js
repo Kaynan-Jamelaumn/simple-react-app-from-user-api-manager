@@ -82,7 +82,7 @@ export const logout = async () => {
 export const register = async (data) => {
   try {
     // Send a POST request to the register endpoint
-    const response = await authApi.post('/user/create', data);
+    const response = await publicApi.post('/user/create', data);
 
     // Check if the response status is within the 200 range (200-299)
     if (response.status >= 200 && response.status < 300) {
@@ -109,6 +109,35 @@ export const register = async (data) => {
     } else {
       // Something happened in setting up the request
       throw new Error(error.message || 'An error occurred during registration');
+    }
+  }
+};
+
+
+export const update = async (data) => {
+  try {
+    // Send a PUT request to the update endpoint
+    const response = await authApi.put('/user/update', data);
+
+    // Check if the response status is within the 200 range (200-299)
+    if (response.status >= 200 && response.status < 300) {
+      // Return the updated user data
+      return response.data;
+    }
+
+    // If the status is not in the 200 range, throw an error
+    throw new Error(`Update failed with status code: ${response.status}`);
+  } catch (error) {
+    // Handle both server errors and network errors
+    if (error.response) {
+      // The server responded with a status code outside the 2xx range
+      throw new Error(error.response.data.error || 'Update failed');
+    } else if (error.request) {
+      // The request was made but no response was received
+      throw new Error('No response received from the server');
+    } else {
+      // Something happened in setting up the request
+      throw new Error(error.message || 'An error occurred during update');
     }
   }
 };

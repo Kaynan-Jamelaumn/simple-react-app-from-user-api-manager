@@ -49,9 +49,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Function to update user data in the context
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser); // Update user data in state
+    localStorage.setItem('user', JSON.stringify(updatedUser)); // Update user data in localStorage
+  };
+
   // Provide authentication state and functions to child components
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, isLoading, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
