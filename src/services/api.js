@@ -2,6 +2,10 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext'; // Import your AuthContext
 import { useNavigation } from './useNavigation'; // Import the custom navigation hook
 
+import { incrementLoading, decrementLoading } from '../store/loadingSlice';
+import { store } from '../store/store';
+
+
 // Create an authenticated axios instance for requests that require a token
 const authApi = axios.create({
   baseURL: 'http://localhost:8765', // Base URL for authenticated requests
@@ -13,6 +17,9 @@ const authApi = axios.create({
 // Add a request interceptor to the authenticated instance
 authApi.interceptors.request.use(
   (config) => {
+    store.dispatch(incrementLoading()) // start loading component on page
+
+
     // Retrieve the token from localStorage
     const token = localStorage.getItem('token');
     // If a token exists, attach it to the request headers
@@ -20,6 +27,7 @@ authApi.interceptors.request.use(
     return config;
   },
   (error) => {
+    store.dispatch(decrementLoading()); // Unload Loading Component
     // Handle request errors
     return Promise.reject(error);
   }
@@ -28,10 +36,12 @@ authApi.interceptors.request.use(
 // Add a response interceptor to handle token expiration
 authApi.interceptors.response.use(
   (response) => {
+    store.dispatch(decrementLoading()); // Unload the Loading Component
     // If the response is successful, just return it
     return response;
   },
   async (error) => {
+    store.dispatch(decrementLoading());
     const originalRequest = error.config;
 
     // Check if the error is due to an expired token (401 Unauthorized)
@@ -57,6 +67,35 @@ const publicApi = axios.create({
     'Content-Type': 'application/json', // Set default headers for JSON data
   },
 });
+
+// Add interceptors to publicApi
+publicApi.interceptors.request.use(
+  (config) => {
+    store.dispatch(incrementLoading());
+    return config;
+  },
+  (error) => {
+    store.dispatch(decrementLoading());
+    return Promise.reject(error);
+  }
+);
+
+publicApi.interceptors.response.use(
+  (response) => {
+    store.dispatch(decrementLoading());
+    return response;
+  },
+  (error) => {
+    store.dispatch(decrementLoading());
+    return Promise.reject(error);
+  }
+);
+
+
+
+
+
+
 
 // Function to handle user login
 export const login = async (credentials) => {

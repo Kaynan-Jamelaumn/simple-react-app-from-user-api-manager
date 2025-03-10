@@ -31,8 +31,8 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await apiLogin(credentials); // Call the login API
-      localStorage.setItem('token', data.token); // Store token in localStorage
-      localStorage.setItem('user', JSON.stringify(data.user)); // Store user data in localStorage
+    //  localStorage.setItem('token', data.token); // Store token in localStorage
+    //  localStorage.setItem('user', JSON.stringify(data.user)); // Store user data in localStorage
       return data; // Return the API response
     } catch (error) {
       return rejectWithValue(error.message); // Handle errors
@@ -49,8 +49,8 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await apiLogout(); // Call the logout API
-      localStorage.removeItem('token'); // Remove token from localStorage
-      localStorage.removeItem('user'); // Remove user data from localStorage
+    //  localStorage.removeItem('token'); // Remove token from localStorage
+    //  localStorage.removeItem('user'); // Remove user data from localStorage
       return null; // Return a resolved value
     } catch (error) {
       console.error('Logout API error:', error);
@@ -68,8 +68,8 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const data = await apiRegister(userData); // Call the register API
-      localStorage.setItem('token', data.token); // Store token in localStorage
-      localStorage.setItem('user', JSON.stringify(data.user)); // Store user data in localStorage
+    //  localStorage.setItem('token', data.token); // Store token in localStorage
+    //  localStorage.setItem('user', JSON.stringify(data.user)); // Store user data in localStorage
       return data; // Return the API response
     } catch (error) {
       return rejectWithValue(error.message); // Handle errors

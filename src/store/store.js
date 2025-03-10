@@ -1,9 +1,9 @@
 // store/store.js
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers  } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import authReducer from './authSlice';
-
+import loadingReducer from './loadingSlice';
 // Configuration for redux-persist
 const persistConfig = {
   key: 'root', // Key for the persisted state
@@ -14,11 +14,16 @@ const persistConfig = {
 // Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
+const rootReducer = combineReducers({
+  auth: persistedReducer,
+  loading: loadingReducer,
+});
+
+
+
 // Configure the store with the persisted reducer
 const store = configureStore({
-  reducer: {
-    auth: persistedReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

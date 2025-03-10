@@ -7,11 +7,15 @@
   import { ToastContainer } from 'react-toastify'; 
   import { useDispatch } from 'react-redux';
 import { initializeAuth } from './store/authSlice';
+import LoadingSpinner from './components/LoadingSpinner';
+import { useSelector } from 'react-redux';
 
 
   function App() {
     const { theme } = useContext(ThemeContext); // Get the current theme from the custom ThemeContext
     const dispatch = useDispatch();
+    const loadingCount = useSelector((state) => state.loading.count);
+
 
     React.useEffect(() => {
       dispatch(initializeAuth());
@@ -20,6 +24,7 @@ import { initializeAuth } from './store/authSlice';
 
     return (
       <StyledThemeProvider theme={theme}> {/* Pass theme to  all styled-components */}
+      {loadingCount > 0 && <LoadingSpinner />}
         <React.Fragment>
           <GlobalStyles />
           <Header />
