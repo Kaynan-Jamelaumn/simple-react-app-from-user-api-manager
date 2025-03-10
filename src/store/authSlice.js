@@ -8,7 +8,7 @@ const initialState = {
   isAuthenticated: false, // Tracks if the user is logged in
   user: null, // Stores the user's data
   token: null, // Stores the authentication token
-  isLoading: true, // Tracks if the authentication state is being initialized
+  isLoading: false, // Tracks if the authentication state is being initialized  Is an async operation (e.g., API call) in progress?
   error: null, // Stores any error messages
 };
 
