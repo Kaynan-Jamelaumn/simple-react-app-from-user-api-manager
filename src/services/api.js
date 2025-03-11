@@ -2,8 +2,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext'; // Import your AuthContext
 import { useNavigation } from './useNavigation'; // Import the custom navigation hook
 
-import { incrementLoading, decrementLoading } from '../store/loadingSlice';
-import { store } from '../store/store';
+import { withSpinner} from '../utils/spinnerLoader';
 
 
 // Create an authenticated axios instance for requests that require a token
@@ -17,7 +16,7 @@ const authApi = axios.create({
 // Add a request interceptor to the authenticated instance
 authApi.interceptors.request.use(
   (config) => {
-    store.dispatch(incrementLoading()) // start loading component on page
+    withSpinner.increment(); // start loading component on page
 
 
     // Retrieve the token from localStorage
@@ -27,7 +26,7 @@ authApi.interceptors.request.use(
     return config;
   },
   (error) => {
-    store.dispatch(decrementLoading()); // Unload Loading Component
+    withSpinner.decrementLoading(); // Unload Loading Component
     // Handle request errors
     return Promise.reject(error);
   }
@@ -36,12 +35,12 @@ authApi.interceptors.request.use(
 // Add a response interceptor to handle token expiration
 authApi.interceptors.response.use(
   (response) => {
-    store.dispatch(decrementLoading()); // Unload the Loading Component
+    withSpinner.decrementLoading(); // Unload the Loading Component
     // If the response is successful, just return it
     return response;
   },
   async (error) => {
-    store.dispatch(decrementLoading());
+    withSpinner.decrementLoading();
     const originalRequest = error.config;
 
     // Check if the error is due to an expired token (401 Unauthorized)
@@ -71,22 +70,22 @@ const publicApi = axios.create({
 // Add interceptors to publicApi
 publicApi.interceptors.request.use(
   (config) => {
-    store.dispatch(incrementLoading());
+    withSpinner.increment();
     return config;
   },
   (error) => {
-    store.dispatch(decrementLoading());
+    withSpinner.decrementLoading();
     return Promise.reject(error);
   }
 );
 
 publicApi.interceptors.response.use(
   (response) => {
-    store.dispatch(decrementLoading());
+    withSpinner.decrementLoading();
     return response;
   },
   (error) => {
-    store.dispatch(decrementLoading());
+    withSpinner.decrementLoading();
     return Promise.reject(error);
   }
 );
