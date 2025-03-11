@@ -3,12 +3,9 @@ import { useAuth } from "../context/AuthContext";
 import { useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ children, pageName }) => {
-  //const { user, isAuthenticated, isLoading } = useAuth(); // Add isLoading to the destructured values
-  const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
-  // If still loading, show a loading indicator (or nothing)
-  if (isLoading) {
-    return <div>Loading...</div>; // You can replace this with a spinner or skeleton loader
-  }
+  //const { user, isAuthenticated, isLoading } = useAuth(); 
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
 
   // If not authenticated, redirect to login
   if (!isAuthenticated) {
